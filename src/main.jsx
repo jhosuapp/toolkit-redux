@@ -5,6 +5,8 @@ import { App } from './jsx/App.jsx';
 import { Provider } from 'react-redux';
 //Store
 import { store } from './jsx/store';
+//Styles
+import './css/main.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
