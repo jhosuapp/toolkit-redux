@@ -1,0 +1,64 @@
+PASOS PARA CREAR UN STORE CON REACT TOOLKIT
+
+
+----------------------------------
+PASO NÚMERO 1
+----------------------------------
+
+Instalamos las dependencias react-redux & @reduxjs/toolkit
+
+----------------------------------
+PASO NÚMERO 2
+----------------------------------
+
+Creamos una carpeta store con un archivo llamado store.js y en este archivo añadimos lo siguiente:
+
+import { configureStore } from '@reduxjs/toolkit';
+//Slice counter
+import { counterSlice } from './slices/counter';
+
+export const store = configureStore({
+  reducer: {
+    counter: counterSlice.reducer
+  },
+});
+
+----------------------------------
+PASO NÚMERO 3
+----------------------------------
+
+Vamos a ir a nuestro archivo main, por lo general es main.jsx o main.tsx y envolvemos nuestra aplicación en el provider:
+
+import { store } from './jsx/store';
+
+<Provider store={ store }>
+ <App />
+</Provider>
+
+
+----------------------------------
+PASO NÚMERO 4
+----------------------------------
+Dentro de store podemos crear una carpeta llamada "slices", aquí podemos crear subcarpetas con nuestros slices, un ejemplo sería
+/store/slices/counter/counterSlice.js, en esta ruta añadimos el siguiente código
+
+import { createSlice } from '@reduxjs/toolkit'
+
+export const counterSlice = createSlice({
+  name: 'counter',
+  initialState: {
+    counter: 10
+  },
+  reducers: {
+    increment: (state) => {
+      // Redux Toolkit allows us to write "mutating" logic in reducers. It
+      // doesn't actually mutate the state because it uses the Immer library,
+      // which detects changes to a "draft state" and produces a brand new
+      // immutable state based off those changes
+      state.counter += 1;
+    },
+  },
+})
+
+// Action creators are generated for each case reducer function
+export const { increment } = counterSlice.actions;
