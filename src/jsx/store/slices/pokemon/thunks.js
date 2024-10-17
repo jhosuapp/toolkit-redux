@@ -5,7 +5,7 @@ const getPokemons = (page = 0) => {
     return async ( dispatch, getState ) => {
         dispatch(startLoadingPokemons());
 
-        const { data } = await pokemonApi.get(`?page=${page}`);
+        const { data } = await pokemonApi.get(`?offset=${page * 10}&limit=${10},`);
 
         dispatch(setPokemons({
             page: page + 1,
