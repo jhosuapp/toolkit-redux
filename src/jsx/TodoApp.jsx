@@ -1,12 +1,20 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useGetTodosQuery } from "./store/api";
+import { useGetTodosQuery, useGetTodoQuery } from "./store/api";
+import { useState } from "react";
 
 
 const TodoApp = () => {
+    const [todoId, setTodoId] = useState(1);
+    // const { data: todos = [], isLoading } = useGetTodosQuery();
+    const { data: todo, isLoading } = useGetTodoQuery(todoId);
 
-    const { data: todos = [], isLoading } = useGetTodosQuery();
+    const handlePrevTodo = () => {
+        if(todoId === 1) return;
+        setTodoId(todoId - 1)
+    }
 
-    const dispatch = useDispatch();
+    const handleNextTodo = () => {
+        setTodoId(todoId + 1)
+    }
 
     return(
         <>
@@ -16,16 +24,23 @@ const TodoApp = () => {
 
             <h4>{isLoading ? 'Loading...' : 'Show data'}</h4>
 
-            <ul>
+            <pre>
+                {
+                    JSON.stringify(todo)
+                }
+            </pre>
+
+            {/* <ul>
                 { todos.map(({ id, title, completed })=>(
                     <li key={ id }>
                         <strong>{completed ? 'Done' : 'Pending'}</strong>{title}
                     </li>
                 )) }
-            </ul>
+            </ul> */}
 
 
-            <button>Next todo</button>
+            <button onClick={ handlePrevTodo }>Prev todo</button>
+            <button onClick={ handleNextTodo }>Next todo</button>
         </>
     )
 }
